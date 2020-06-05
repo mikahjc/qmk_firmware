@@ -72,22 +72,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 )
 
 /* number of backlight levels */
-#define BACKLIGHT_LEVELS 3
+//#define BACKLIGHT_LEVELS 3
 
-#ifndef LED_BRIGHTNESS_LO
-#define LED_BRIGHTNESS_LO       15
-#endif
-#ifndef LED_BRIGHTNESS_HI
-#define LED_BRIGHTNESS_HI       255
-#endif
-#define LED_BRIGHTNESS_DEFAULT (LED_BRIGHTNESS_HI)
+//#ifndef LED_BRIGHTNESS_LO
+//#define LED_BRIGHTNESS_LO       15
+//#endif
+//#ifndef LED_BRIGHTNESS_HI
+//#define LED_BRIGHTNESS_HI       255
+//#endif
+//#define LED_BRIGHTNESS_DEFAULT (LED_BRIGHTNESS_HI)
 
 /* ws2812 RGB LED */
-#define RGB_DI_PIN D7
-#define RGBLIGHT_ANIMATIONS
-#define RGBLIGHT_HUE_STEP 12
-#define RGBLIGHT_SAT_STEP 255
-#define RGBLIGHT_VAL_STEP 12
+//#define RGB_DI_PIN D7
+//#define RGBLIGHT_ANIMATIONS
+//#define RGBLIGHT_HUE_STEP 12
+//#define RGBLIGHT_SAT_STEP 255
+//#define RGBLIGHT_VAL_STEP 12
 
 // Pick one of the modes
 // Defaults to 15 mirror, for legacy behavior
@@ -99,9 +99,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* fix space cadet rollover issue */
 #define DISABLE_SPACE_CADET_ROLLOVER
 
-#define RGBW
+//#define RGBW
 
-#define RGBLIGHT_SLEEP
+//#define RGBLIGHT_SLEEP
 
 /*
  * The debounce filtering reports a key/switch change directly,
@@ -119,17 +119,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // RGB backlight
-#define DRIVER_ADDR_1 0b1110100
-#define DRIVER_ADDR_2 0b1110111
-#define DRIVER_COUNT 2
-#define DRIVER_1_LED_TOTAL 24
-#define DRIVER_2_LED_TOTAL 24
-#define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
+//#define DRIVER_ADDR_1 0b1110100
+//#define DRIVER_ADDR_2 0b1110111
+//#define DRIVER_COUNT 2
+//#define DRIVER_1_LED_TOTAL 24
+//#define DRIVER_2_LED_TOTAL 24
+//#define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
 
-#define RGB_MATRIX_LED_PROCESS_LIMIT 5
-#define RGB_MATRIX_LED_FLUSH_LIMIT 26
+//#define RGB_MATRIX_LED_PROCESS_LIMIT 5
+//#define RGB_MATRIX_LED_FLUSH_LIMIT 26
 
-#define RGB_DISABLE_WHEN_USB_SUSPENDED true
+//#define RGB_DISABLE_WHEN_USB_SUSPENDED true
 
 // #define RGBLIGHT_COLOR_LAYER_0 0x00, 0x00, 0xFF
 /* #define RGBLIGHT_COLOR_LAYER_1 0x00, 0x00, 0xFF */

@@ -20,27 +20,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ergodox_ez.h"
 
-extern inline void ergodox_board_led_on(void);
-extern inline void ergodox_right_led_1_on(void);
-extern inline void ergodox_right_led_2_on(void);
-extern inline void ergodox_right_led_3_on(void);
-extern inline void ergodox_right_led_on(uint8_t led);
+//extern inline void ergodox_board_led_on(void);
+//extern inline void ergodox_right_led_1_on(void);
+//extern inline void ergodox_right_led_2_on(void);
+//extern inline void ergodox_right_led_3_on(void);
+//extern inline void ergodox_right_led_on(uint8_t led);
 
-extern inline void ergodox_board_led_off(void);
-extern inline void ergodox_right_led_1_off(void);
-extern inline void ergodox_right_led_2_off(void);
-extern inline void ergodox_right_led_3_off(void);
-extern inline void ergodox_right_led_off(uint8_t led);
+//extern inline void ergodox_board_led_off(void);
+//extern inline void ergodox_right_led_1_off(void);
+//extern inline void ergodox_right_led_2_off(void);
+//extern inline void ergodox_right_led_3_off(void);
+//extern inline void ergodox_right_led_off(uint8_t led);
 
-extern inline void ergodox_led_all_on(void);
-extern inline void ergodox_led_all_off(void);
+//extern inline void ergodox_led_all_on(void);
+//extern inline void ergodox_led_all_off(void);
 
-extern inline void ergodox_right_led_1_set(uint8_t n);
-extern inline void ergodox_right_led_2_set(uint8_t n);
-extern inline void ergodox_right_led_3_set(uint8_t n);
-extern inline void ergodox_right_led_set(uint8_t led, uint8_t n);
+//extern inline void ergodox_right_led_1_set(uint8_t n);
+//extern inline void ergodox_right_led_2_set(uint8_t n);
+//extern inline void ergodox_right_led_3_set(uint8_t n);
+//extern inline void ergodox_right_led_set(uint8_t led, uint8_t n);
 
-extern inline void ergodox_led_all_set(uint8_t n);
+//extern inline void ergodox_led_all_set(uint8_t n);
 
 keyboard_config_t keyboard_config;
 
@@ -75,64 +75,9 @@ void matrix_init_kb(void) {
     }
 #endif
 
-    ergodox_blink_all_leds();
+ //   ergodox_blink_all_leds();
 
     matrix_init_user();
-}
-
-void ergodox_blink_all_leds(void)
-{
-    ergodox_led_all_off();
-    ergodox_led_all_set(LED_BRIGHTNESS_DEFAULT);
-    ergodox_right_led_1_on();
-    _delay_ms(50);
-    ergodox_right_led_2_on();
-    _delay_ms(50);
-    ergodox_right_led_3_on();
-    _delay_ms(50);
-#ifdef LEFT_LEDS
-    ergodox_left_led_1_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-    ergodox_left_led_2_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-    ergodox_left_led_3_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-#endif
-    ergodox_right_led_1_off();
-    _delay_ms(50);
-    ergodox_right_led_2_off();
-    _delay_ms(50);
-    ergodox_right_led_3_off();
-#ifdef LEFT_LEDS
-    _delay_ms(50);
-    ergodox_left_led_1_off();
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-    _delay_ms(50);
-    ergodox_left_led_2_off();
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-    _delay_ms(50);
-    ergodox_left_led_3_off();
-    if (!mcp23018_status) {
-      mcp23018_status = ergodox_left_leds_update();
-    }
-#endif
-
-    //ergodox_led_all_on();
-    //_delay_ms(333);
-    ergodox_led_all_off();
 }
 
 uint8_t init_mcp23018(void) {
@@ -182,39 +127,6 @@ out:
 
     return mcp23018_status;
 }
-
-#ifdef LEFT_LEDS
-uint8_t ergodox_left_leds_update(void) {
-    if (mcp23018_status) { // if there was an error
-        return mcp23018_status;
-    }
-#define LEFT_LED_1_SHIFT        7       // in MCP23018 port B
-#define LEFT_LED_2_SHIFT        6       // in MCP23018 port B
-#define LEFT_LED_3_SHIFT        7       // in MCP23018 port A
-
-    // set logical value (doesn't matter on inputs)
-    // - unused  : hi-Z : 1
-    // - input   : hi-Z : 1
-    // - driving : hi-Z : 1
-    mcp23018_status = i2c_start(I2C_ADDR_WRITE, ERGODOX_EZ_I2C_TIMEOUT);
-    if (mcp23018_status) goto out;
-    mcp23018_status = i2c_write(OLATA, ERGODOX_EZ_I2C_TIMEOUT);
-    if (mcp23018_status) goto out;
-    mcp23018_status = i2c_write(0b11111111
-                                & ~(ergodox_left_led_3<<LEFT_LED_3_SHIFT),
-                                ERGODOX_EZ_I2C_TIMEOUT);
-    if (mcp23018_status) goto out;
-    mcp23018_status = i2c_write(0b11111111
-                                & ~(ergodox_left_led_2<<LEFT_LED_2_SHIFT)
-                                & ~(ergodox_left_led_1<<LEFT_LED_1_SHIFT),
-                                ERGODOX_EZ_I2C_TIMEOUT);
-    if (mcp23018_status) goto out;
-
- out:
-    i2c_stop();
-    return mcp23018_status;
-}
-#endif
 
 
 #ifdef SWAP_HANDS_ENABLE
@@ -337,19 +249,15 @@ led_config_t g_led_config = { {
 } };
 
 void suspend_power_down_kb(void) {
-    rgb_matrix_set_color_all(0, 0, 0);
-    rgb_matrix_set_suspend_state(true);
     suspend_power_down_user();
 }
 
  void suspend_wakeup_init_kb(void) {
-    rgb_matrix_set_suspend_state(false);
     suspend_wakeup_init_user();
 }
 
 #ifdef ORYX_CONFIGURATOR
 void keyboard_post_init_kb(void) {
-    rgb_matrix_enable_noeeprom();
     keyboard_post_init_user();
 }
 #endif
