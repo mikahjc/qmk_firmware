@@ -20,33 +20,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "ergodox_ez.h"
 
-extern inline void ergodox_board_led_on(void);
-extern inline void ergodox_right_led_1_on(void);
-extern inline void ergodox_right_led_2_on(void);
-extern inline void ergodox_right_led_3_on(void);
+//extern inline void ergodox_board_led_on(void);
+//extern inline void ergodox_right_led_1_on(void);
+//extern inline void ergodox_right_led_2_on(void);
+//extern inline void ergodox_right_led_3_on(void);
+//extern inline void ergodox_right_led_on(uint8_t led);
 
-extern inline void ergodox_board_led_off(void);
-extern inline void ergodox_right_led_1_off(void);
-extern inline void ergodox_right_led_2_off(void);
-extern inline void ergodox_right_led_3_off(void);
+//extern inline void ergodox_board_led_off(void);
+//extern inline void ergodox_right_led_1_off(void);
+//extern inline void ergodox_right_led_2_off(void);
+//extern inline void ergodox_right_led_3_off(void);
+//extern inline void ergodox_right_led_off(uint8_t led);
 
-extern inline void ergodox_led_all_on(void);
-extern inline void ergodox_led_all_off(void);
+//extern inline void ergodox_led_all_on(void);
+//extern inline void ergodox_led_all_off(void);
 
-extern inline void ergodox_right_led_1_set(uint8_t n);
-extern inline void ergodox_right_led_2_set(uint8_t n);
-extern inline void ergodox_right_led_3_set(uint8_t n);
-extern inline void ergodox_right_led_set(uint8_t led, uint8_t n);
+//extern inline void ergodox_right_led_1_set(uint8_t n);
+//extern inline void ergodox_right_led_2_set(uint8_t n);
+//extern inline void ergodox_right_led_3_set(uint8_t n);
+//extern inline void ergodox_right_led_set(uint8_t led, uint8_t n);
 
-extern inline void ergodox_led_all_set(uint8_t n);
+//extern inline void ergodox_led_all_set(uint8_t n);
 
 keyboard_config_t keyboard_config;
 
-bool         i2c_initialized = 0;
+bool i2c_initialized = 0;
 i2c_status_t mcp23018_status = 0x20;
 
 void matrix_init_kb(void) {
-    // keyboard LEDs (see "PWM on ports OC1(A|B|C)" in "teensy-2-0.md")
+   // keyboard LEDs (see "PWM on ports OC1(A|B|C)" in "teensy-2-0.md")
     TCCR1A = 0b10101001;  // set and configure fast PWM
     TCCR1B = 0b00001001;  // set and configure fast PWM
 
@@ -61,7 +63,7 @@ void matrix_init_kb(void) {
     gpio_set_pin_input_high(E6);
 
     keyboard_config.raw = eeconfig_read_kb();
-    ergodox_led_all_set((uint8_t)keyboard_config.led_level * 255 / 4);
+    ergodox_led_all_set((uint8_t)keyboard_config.led_level * 255 / 4 );
 #ifdef RGB_MATRIX_ENABLE
     if (keyboard_config.rgb_matrix_enable) {
         rgb_matrix_set_flags(LED_FLAG_ALL);
@@ -70,63 +72,9 @@ void matrix_init_kb(void) {
     }
 #endif
 
-    ergodox_blink_all_leds();
+ //   ergodox_blink_all_leds();
 
     matrix_init_user();
-}
-
-void ergodox_blink_all_leds(void) {
-    ergodox_led_all_off();
-    ergodox_led_all_set(LED_BRIGHTNESS_DEFAULT);
-    ergodox_right_led_1_on();
-    _delay_ms(50);
-    ergodox_right_led_2_on();
-    _delay_ms(50);
-    ergodox_right_led_3_on();
-    _delay_ms(50);
-#ifdef LEFT_LEDS
-    ergodox_left_led_1_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-    ergodox_left_led_2_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-    ergodox_left_led_3_on();
-    _delay_ms(50);
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-#endif
-    ergodox_right_led_1_off();
-    _delay_ms(50);
-    ergodox_right_led_2_off();
-    _delay_ms(50);
-    ergodox_right_led_3_off();
-#ifdef LEFT_LEDS
-    _delay_ms(50);
-    ergodox_left_led_1_off();
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-    _delay_ms(50);
-    ergodox_left_led_2_off();
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-    _delay_ms(50);
-    ergodox_left_led_3_off();
-    if (!mcp23018_status) {
-        mcp23018_status = ergodox_left_leds_update();
-    }
-#endif
-
-    // ergodox_led_all_on();
-    //_delay_ms(333);
-    ergodox_led_all_off();
 }
 
 uint8_t init_mcp23018(void) {
@@ -163,7 +111,7 @@ uint8_t init_mcp23018(void) {
 
 #ifdef LEFT_LEDS
     if (!mcp23018_status) mcp23018_status = ergodox_left_leds_update();
-#endif  // LEFT_LEDS
+#endif // LEFT_LEDS
 
     // SREG=sreg_prev;
 
@@ -193,25 +141,25 @@ uint8_t ergodox_left_leds_update(void) {
 #endif
 
 #ifdef SWAP_HANDS_ENABLE
-__attribute__((weak))
+__attribute__ ((weak))
 // swap-hands action needs a matrix to define the swap
-const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
+const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
     /* Left hand, matrix positions */
-    {{0, 13}, {1, 13}, {2, 13}, {3, 13}, {4, 13}, {5, 13}},
-    {{0, 12}, {1, 12}, {2, 12}, {3, 12}, {4, 12}, {5, 12}},
-    {{0, 11}, {1, 11}, {2, 11}, {3, 11}, {4, 11}, {5, 11}},
-    {{0, 10}, {1, 10}, {2, 10}, {3, 10}, {4, 10}, {5, 10}},
-    {{0, 9}, {1, 9}, {2, 9}, {3, 9}, {4, 9}, {5, 9}},
-    {{0, 8}, {1, 8}, {2, 8}, {3, 8}, {4, 8}, {5, 8}},
-    {{0, 7}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}},
+    {{0,13}, {1,13}, {2,13}, {3,13}, {4,13}, {5,13}},
+    {{0,12}, {1,12}, {2,12}, {3,12}, {4,12}, {5,12}},
+    {{0,11}, {1,11}, {2,11}, {3,11}, {4,11}, {5,11}},
+    {{0,10}, {1,10}, {2,10}, {3,10}, {4,10}, {5,10}},
+    {{0,9}, {1,9}, {2,9}, {3,9}, {4,9}, {5,9}},
+    {{0,8}, {1,8}, {2,8}, {3,8}, {4,8}, {5,8}},
+    {{0,7}, {1,7}, {2,7}, {3,7}, {4,7}, {5,7}},
     /* Right hand, matrix positions */
-    {{0, 6}, {1, 6}, {2, 6}, {3, 6}, {4, 6}, {5, 6}},
-    {{0, 5}, {1, 5}, {2, 5}, {3, 5}, {4, 5}, {5, 5}},
-    {{0, 4}, {1, 4}, {2, 4}, {3, 4}, {4, 4}, {5, 4}},
-    {{0, 3}, {1, 3}, {2, 3}, {3, 3}, {4, 3}, {5, 3}},
-    {{0, 2}, {1, 2}, {2, 2}, {3, 2}, {4, 2}, {5, 2}},
-    {{0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}},
-    {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}},
+    {{0,6}, {1,6}, {2,6}, {3,6}, {4,6}, {5,6}},
+    {{0,5}, {1,5}, {2,5}, {3,5}, {4,5}, {5,5}},
+    {{0,4}, {1,4}, {2,4}, {3,4}, {4,4}, {5,4}},
+    {{0,3}, {1,3}, {2,3}, {3,3}, {4,3}, {5,3}},
+    {{0,2}, {1,2}, {2,2}, {3,2}, {4,2}, {5,2}},
+    {{0,1}, {1,1}, {2,1}, {3,1}, {4,1}, {5,1}},
+    {{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {5,0}},
 };
 #endif
 
@@ -311,14 +259,20 @@ led_config_t g_led_config = { {
     4, 4, 4, 4, 4, 4,
     4, 4, 1, 1, 1, 1
 } };
-// clang-format on
 
-#    ifdef ORYX_CONFIGURATOR
+void suspend_power_down_kb(void) {
+    suspend_power_down_user();
+}
+
+ void suspend_wakeup_init_kb(void) {
+    suspend_wakeup_init_user();
+}
+
+#ifdef ORYX_CONFIGURATOR
 void keyboard_post_init_kb(void) {
-    rgb_matrix_enable_noeeprom();
     keyboard_post_init_user();
 }
-#    endif
+#endif
 #endif
 
 #ifdef ORYX_CONFIGURATOR
@@ -326,48 +280,51 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LED_LEVEL:
             if (record->event.pressed) {
-                keyboard_config.led_level++;
-                if (keyboard_config.led_level > 4) {
+                 keyboard_config.led_level++;
+                 if (keyboard_config.led_level > 4) {
                     keyboard_config.led_level = 0;
-                }
-                ergodox_led_all_set((uint8_t)keyboard_config.led_level * 255 / 4);
-                eeconfig_update_kb(keyboard_config.raw);
-                layer_state_set_kb(layer_state);
+                 }
+                 ergodox_led_all_set((uint8_t)keyboard_config.led_level * 255 / 4 );
+                 eeconfig_update_kb(keyboard_config.raw);
+                 layer_state_set_kb(layer_state);
             }
             break;
-#    ifdef RGB_MATRIX_ENABLE
+#ifdef RGB_MATRIX_ENABLE
         case TOGGLE_LAYER_COLOR:
             if (record->event.pressed) {
                 keyboard_config.disable_layer_led ^= 1;
-                if (keyboard_config.disable_layer_led) rgb_matrix_set_color_all(0, 0, 0);
+                if (keyboard_config.disable_layer_led)
+                    rgb_matrix_set_color_all(0, 0, 0);
                 eeconfig_update_kb(keyboard_config.raw);
             }
             break;
         case RGB_TOG:
             if (record->event.pressed) {
-                switch (rgb_matrix_get_flags()) {
-                    case LED_FLAG_ALL: {
-                        rgb_matrix_set_flags(LED_FLAG_NONE);
-                        keyboard_config.rgb_matrix_enable = false;
-                        rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
-                    default: {
-                        rgb_matrix_set_flags(LED_FLAG_ALL);
-                        keyboard_config.rgb_matrix_enable = true;
-                    } break;
-                }
-                eeconfig_update_kb(keyboard_config.raw);
+              switch (rgb_matrix_get_flags()) {
+                case LED_FLAG_ALL: {
+                    rgb_matrix_set_flags(LED_FLAG_NONE);
+                    keyboard_config.rgb_matrix_enable = false;
+                    rgb_matrix_set_color_all(0, 0, 0);
+                  }
+                  break;
+                default: {
+                    rgb_matrix_set_flags(LED_FLAG_ALL);
+                    keyboard_config.rgb_matrix_enable = true;
+                  }
+                  break;
+              }
+              eeconfig_update_kb(keyboard_config.raw);
             }
             return false;
-#    endif
+#endif
     }
     return process_record_user(keycode, record);
 }
 #endif
 
 void eeconfig_init_kb(void) {  // EEPROM is getting reset!
-    keyboard_config.raw               = 0;
-    keyboard_config.led_level         = 4;
+    keyboard_config.raw = 0;
+    keyboard_config.led_level = 4;
     keyboard_config.rgb_matrix_enable = true;
     eeconfig_update_kb(keyboard_config.raw);
     eeconfig_init_user();
