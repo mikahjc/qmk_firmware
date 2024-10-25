@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 /*
- * This constant define not debouncing time in msecs, assuming eager_pr.
+ * This constant define not debouncing time in msecs, assuming sym_eager_pr.
  *
  * On Ergodox matrix scan rate is relatively low, because of slow I2C.
  * Now it's only 317 scans/second, or about 3.15 msec/scan.
